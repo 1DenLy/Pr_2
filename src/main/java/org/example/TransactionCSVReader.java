@@ -8,17 +8,19 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TransactionCSVReader {
+public abstract class TransactionCSVReader {
 
-    public List<Transaction> readTransactions(String filePath) {
+    public static List<Transaction> readTransactions(String filePath) {
         List<Transaction> transactions = new ArrayList<>();
         try {
             URL url = new URL(filePath);
+
             try (BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream(), StandardCharsets.UTF_8))) {
                 String line;
                 while ((line = br.readLine()) != null) {
                     String[] values = line.split(",");
                     if (values.length >= 3) {
+
                         Transaction transaction = new Transaction(
                                 values[0],
                                 Double.parseDouble(values[1]),
